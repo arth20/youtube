@@ -1,5 +1,7 @@
 pipeline {
-	def dockerImage
+	environment {
+    dockerImage = ''
+  }
   agent any
     
   tools {nodejs "localnode"}
