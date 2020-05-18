@@ -1,4 +1,7 @@
 pipeline {
+	environment {
+    dockerImage = ''
+  }
   agent any
     
   tools {nodejs "localnode"}
@@ -13,10 +16,18 @@ pipeline {
      
     stage('Build') {
       steps {
-        sh 'npm install'
-	sh 'npm run build'
+       dockerImage = docker.build "arth20/youtube"+":$BUILD_NUMBER"
       }
     }  
-    
+    stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( 'https://registry.hub.docker.com', 'dockerHub' ) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
+	  
   }
 }
