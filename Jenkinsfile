@@ -1,7 +1,5 @@
 pipeline {
-	environment {
-    dockerImage = ''
-  }
+	def dockerImage
   agent any
     
   tools {nodejs "localnode"}
@@ -16,7 +14,7 @@ pipeline {
      
     stage('Build') {
       steps {
-       dockerImage = docker.build ("arth20/youtube"+":$BUILD_NUMBER")
+       dockerImage = docker.build("arth20/youtube"+":$BUILD_NUMBER")
       }
     }  
     stage('Deploy Image') {
