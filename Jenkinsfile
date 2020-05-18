@@ -16,7 +16,9 @@ pipeline {
      
     stage('Build') {
       steps {
+	      script{
        dockerImage = docker.build("arth20/youtube"+":$BUILD_NUMBER")
+      }
       }
     }  
     stage('Deploy Image') {
